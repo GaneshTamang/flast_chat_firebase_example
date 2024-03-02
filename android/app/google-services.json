@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "504736964361",
+    "project_id": "flast-chat-angela-example",
+    "storage_bucket": "flast-chat-angela-example.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504736964361:android:1708957fe9e9ddcfe3bdd8",
+        "android_client_info": {
+          "package_name": "com.example.flast_chat_firebase_example"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDf1nfoTTkVbgGPj3UL0s3NNk8sCGx45Oo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
