@@ -1,7 +1,8 @@
 import 'package:flast_chat_firebase_example/constants.dart';
 import 'package:flast_chat_firebase_example/custom_widgets/custom_material_button.dart';
 import 'package:flast_chat_firebase_example/custom_widgets/gradient_text.dart';
-import 'package:flast_chat_firebase_example/screens/registration_page.dart';
+import 'package:flast_chat_firebase_example/screens/login_screen.dart';
+import 'package:flast_chat_firebase_example/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -17,31 +18,60 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   TextEditingController typedPassword = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        print("didPoP:$didPop");
+        if (didPop) {
+          return;
+        }
+        return await showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("Exit App ?"),
+                actions: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                      child: const Text('yes')),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('no')),
+                ],
+              );
+            });
       },
-      child: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            topicWelcome(),
-            KCustomMaterialButton(
-              buttonName: 'Login page',
-              buttonColor: Colors.blueAccent,
-              onTapCallBack: () {
-                Navigator.pushNamed(context, RegistrationPage.pageID);
-              },
-            ),
-            KCustomMaterialButton(
-              buttonName: 'Registration Page',
-              buttonColor: Colors.blueAccent,
-              onTapCallBack: () {
-                Navigator.pushNamed(context, RegistrationPage.pageID);
-              },
-            ),
-          ],
+      child: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              topicWelcome(),
+              KCustomMaterialButton(
+                buttonName: 'Login page',
+                buttonColor: Colors.blueAccent,
+                onTapCallBack: () {
+                  Navigator.pushNamed(context, LoginScreen.pageID);
+                },
+              ),
+              KCustomMaterialButton(
+                buttonName: 'Registration Page',
+                buttonColor: Colors.blueAccent,
+                onTapCallBack: () {
+                  Navigator.pushNamed(context, RegistrationScreen.pageID);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

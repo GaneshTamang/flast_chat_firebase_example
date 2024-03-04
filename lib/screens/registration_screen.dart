@@ -3,15 +3,15 @@ import 'package:flast_chat_firebase_example/custom_widgets/custom_material_butto
 import 'package:flast_chat_firebase_example/services/firebase_service.dart';
 import 'package:flutter/material.dart';
 
-class RegistrationPage extends StatefulWidget {
+class RegistrationScreen extends StatefulWidget {
   static String pageID = "Registration Page";
-  const RegistrationPage({super.key});
+  const RegistrationScreen({super.key});
 
   @override
-  State<RegistrationPage> createState() => _RegistrationPageState();
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
 }
 
-class _RegistrationPageState extends State<RegistrationPage> {
+class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController typedEmail = TextEditingController();
   TextEditingController typedPassword = TextEditingController();
   @override
@@ -29,6 +29,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                keyboardType: TextInputType.emailAddress,
                 textAlign: TextAlign.center,
                 decoration: textInputDecoration.copyWith(
                   hintText: 'email_example@example.com',
@@ -39,6 +40,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                obscureText: true,
+                keyboardType: TextInputType.visiblePassword,
                 textAlign: TextAlign.center,
                 decoration: textInputDecoration.copyWith(
                   alignLabelWithHint: true,

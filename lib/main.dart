@@ -1,7 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flast_chat_firebase_example/firebase_options.dart';
 import 'package:flast_chat_firebase_example/screens/chat_screen.dart';
-import 'package:flast_chat_firebase_example/screens/registration_page.dart';
+import 'package:flast_chat_firebase_example/screens/login_screen.dart';
+import 'package:flast_chat_firebase_example/screens/registration_screen.dart';
 import 'package:flast_chat_firebase_example/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -29,8 +30,9 @@ class FlashChatApp extends StatelessWidget {
       initialRoute: WelcomeScreen.pageID,
       routes: {
         WelcomeScreen.pageID: (context) => const WelcomeScreen(),
-        RegistrationPage.pageID: (context) => const RegistrationPage(),
-        ChatPage.pageID: (context) => const ChatPage(),
+        RegistrationScreen.pageID: (context) => const RegistrationScreen(),
+        LoginScreen.pageID: (context) => const LoginScreen(),
+        ChatScreen.pageID: (context) => const ChatScreen(),
       },
     );
   }

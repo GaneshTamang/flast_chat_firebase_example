@@ -16,6 +16,10 @@ TextStyle welcomeLogoStyleText = const TextStyle(
     ),
   ],
 );
+TextStyle appTextStyle = const TextStyle(
+  fontSize: 30,
+  fontWeight: FontWeight.w800,
+);
 InputDecoration textInputDecoration = InputDecoration(
   contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
   border: OutlineInputBorder(
