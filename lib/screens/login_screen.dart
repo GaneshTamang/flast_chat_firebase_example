@@ -14,6 +14,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController typedEmail = TextEditingController();
   TextEditingController typedPassword = TextEditingController();
+  bool navigating = false;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -53,11 +55,15 @@ class _LoginScreenState extends State<LoginScreen> {
             KCustomMaterialButton(
               buttonName: 'Log In',
               onTapCallBack: () async {
-                await FirebaseService().loginService(
-                  typedEmail: typedEmail.text,
-                  typedPassword: typedPassword.text,
-                  context: context,
-                );
+                WidgetsBinding.instance.addPostFrameCallback((_) async {
+                  await FirebaseService().loginService(
+                    typedEmail: typedEmail.text,
+                    typedPassword: typedPassword.text,
+                    context: context,
+                  );
+
+//Your Navigation code will be here
+                });
               },
               buttonColor: Colors.green,
             ),

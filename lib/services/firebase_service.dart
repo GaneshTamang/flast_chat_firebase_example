@@ -3,12 +3,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flast_chat_firebase_example/constants.dart';
 import 'package:flast_chat_firebase_example/screens/chat_screen.dart';
-import 'package:flast_chat_firebase_example/screens/welcome_screen.dart';
-
 import 'package:flutter/material.dart';
 
 class FirebaseService {
   final FirebaseAuth authentication = FirebaseAuth.instance;
+  bool canNavigate = false;
+
+  checkAndNavigateToPage(bool shallNavigate, BuildContext context) {
+    if (shallNavigate) {
+      Navigator.pushNamed(context, ChatScreen.pageID);
+      canNavigate = false;
+      print('canNavigate:$canNavigate');
+    } else {
+      return;
+    }
+  }
+
   Future<void> logOutService(BuildContext context) async {
     try {
       if (context.mounted) {
@@ -16,7 +26,7 @@ class FirebaseService {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text("logOut ?"),
+              title: const Text("logOut ?"),
               content: const Card(
                 child: Image(
                   image: AssetImage('images/confused.png'),
@@ -29,14 +39,26 @@ class FirebaseService {
                   onPressed: () async {
                     await authentication.signOut();
                     if (context.mounted) {
+                      // * pop alert page
+
+                      Navigator.of(context).pop();
+                      // * 2nd pop for chat page
                       Navigator.of(context).pop();
 
-                      Navigator.pushReplacementNamed(
-                          context, WelcomeScreen.pageID);
+                      // Navigator.pushReplacementNamed(
+                      //     context, WelcomeScreen.pageID);
                     }
                   },
                   child: const Text('ok'),
-                )
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: const Text('Nevermind'),
+                ),
               ],
             );
           },
@@ -80,7 +102,8 @@ class FirebaseService {
       await authentication.signInWithEmailAndPassword(
           email: typedEmail, password: typedPassword);
       if (context.mounted) {
-        Navigator.pushReplacementNamed(context, ChatScreen.pageID);
+        canNavigate = true;
+        checkAndNavigateToPage(canNavigate, context);
       }
     } on FirebaseAuthException catch (error) {
       if (context.mounted) {

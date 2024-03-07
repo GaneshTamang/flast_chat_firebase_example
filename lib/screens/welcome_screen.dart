@@ -21,30 +21,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) async {
-        print("didPoP:$didPop");
         if (didPop) {
           return;
         }
-        return await showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text("Exit App ?"),
-                actions: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        Navigator.pop(context);
-                      },
-                      child: const Text('yes')),
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('no')),
-                ],
-              );
-            });
+        return await alertWhenExitingApp(context);
       },
       child: GestureDetector(
         onTap: () {
@@ -55,7 +35,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              topicWelcome(),
+              headingWelcomeScreen(),
               KCustomMaterialButton(
                 buttonName: 'Login page',
                 buttonColor: Colors.blueAccent,
@@ -77,7 +57,30 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 
-  Row topicWelcome() {
+  Future<void> alertWhenExitingApp(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Exit App ?"),
+            actions: [
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(true);
+                    Navigator.of(context).pop(true);
+                  },
+                  child: const Text('yes')),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  child: const Text('no')),
+            ],
+          );
+        });
+  }
+
+  Row headingWelcomeScreen() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
