@@ -1,6 +1,6 @@
 import 'package:flast_chat_firebase_example/constants.dart';
 import 'package:flast_chat_firebase_example/custom_widgets/custom_material_button.dart';
-import 'package:flast_chat_firebase_example/services/firebase_service.dart';
+import 'package:flast_chat_firebase_example/services/firebase_auth3_service.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationScreen extends StatefulWidget {

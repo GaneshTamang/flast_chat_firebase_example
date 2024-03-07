@@ -1,7 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flast_chat_firebase_example/constants.dart';
-import 'package:flast_chat_firebase_example/services/firebase_service.dart';
+import 'package:flast_chat_firebase_example/services/firebase_auth3_service.dart';
+import 'package:flast_chat_firebase_example/services/firebase_crud_service.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -13,28 +12,16 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
   TextEditingController typedTextmessage = TextEditingController();
-  String? currentLoggedInUser;
-
-  currentUser() {
-    User? loggedInUser = _auth.currentUser;
-    if (loggedInUser != null) {
-      currentLoggedInUser = loggedInUser.email!;
-    } else {
-      currentLoggedInUser = 'null: no user';
-    }
-  }
 
   @override
   void initState() {
-    currentUser();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    FireBaseCrudService().readMessage();
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -57,15 +44,16 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {
-                        Map<String, dynamic> user = {
-                          'sender': currentLoggedInUser!,
-                          'text': typedTextmessage.text,
-                          'date': DateTime.now(),
-                        };
-                        _db.collection("messages").add(user).then(
-                            (DocumentReference doc) => print(
-                                'DocumentSnapshot added with ID: ${doc.id}'));
+                      onTap: () async {
+                        if (typedTextmessage.text == "") {
+                          // ignore: avoid_print
+                          print('action canceled text empty');
+                          return;
+                        } else {
+                          await FireBaseCrudService()
+                              .addDataToDB(typedMessage: typedTextmessage.text);
+                          typedTextmessage.text = "";
+                        }
                       },
                       child: const Padding(
                         padding: EdgeInsets.all(8.0),
