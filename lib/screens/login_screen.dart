@@ -55,15 +55,13 @@ class _LoginScreenState extends State<LoginScreen> {
             KCustomMaterialButton(
               buttonName: 'Log In',
               onTapCallBack: () async {
-                WidgetsBinding.instance.addPostFrameCallback((_) async {
-                  await FirebaseService().loginService(
-                    typedEmail: typedEmail.text,
-                    typedPassword: typedPassword.text,
-                    context: context,
-                  );
+                await FirebaseService().loginService(
+                  typedEmail: typedEmail.text,
+                  typedPassword: typedPassword.text,
+                  context: context,
+                );
 
 //Your Navigation code will be here
-                });
               },
               buttonColor: Colors.green,
             ),

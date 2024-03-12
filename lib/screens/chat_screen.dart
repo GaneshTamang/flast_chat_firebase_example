@@ -16,12 +16,13 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void initState() {
+    // FireBaseCrudService().getMessage();
+    FireBaseCrudService().getStreamMessage();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    FireBaseCrudService().readMessage();
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();

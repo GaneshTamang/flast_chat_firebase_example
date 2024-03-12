@@ -1,10 +1,7 @@
 // ignore_for_file: avoid_print
 
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
 
 class FireBaseCrudService {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -30,20 +27,37 @@ class FireBaseCrudService {
 
       await db.collection('messages').add(dataToSend);
     } catch (e) {
-      log(e.toString());
+      print(e);
     }
   }
 
-  readMessage() async {
-    db.collection("messages").get().then(
+// ? this is a type of method only for quering when required where as stream is for check stream if any do again
+  getMessage() async {
+    await db.collection("messages").get().then(
       (querySnapshot) {
-        print("Successfully completed");
+        print("\u001b[4m\u001b[1m Successfully completed \n Message Section:");
         for (var docSnapshot in querySnapshot.docs) {
+          // print('${docSnapshot.id} => DAta:${docSnapshot.data()}');
           print(
-              '${docSnapshot.id} => DAta:${docSnapshot.data()} \n message:${docSnapshot.data()['text']}');
+              ' \n sender:${docSnapshot.data()['sender']}\n message:${docSnapshot.data()['text']}');
         }
       },
       onError: (e) => print("Error completing: $e"),
     );
+  }
+// ! created message for streaming type for keep updating data from DB if any chages
+
+  getStreamMessage() async {
+    // ! get snap for stream for push from server
+    await for (var docSnapshot in db.collection('messages').snapshots()) {
+      // !after snap lopp to message data
+      for (QueryDocumentSnapshot<Map> messageDetailsMap in docSnapshot.docs) {
+        // * for printing bold  and underlined
+        print(
+            "\u001b[4m\u001b[1m\u001b[2m OverAll Queried Data:${messageDetailsMap.runtimeType}");
+        print(
+            'Sender:${messageDetailsMap.data()['sender']} \n Message: ${messageDetailsMap.data()['text']}');
+      }
+    }
   }
 }
