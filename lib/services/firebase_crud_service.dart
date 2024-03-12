@@ -1,7 +1,10 @@
+// ignore_for_file: avoid_print
+
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class FireBaseCrudService {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -32,8 +35,15 @@ class FireBaseCrudService {
   }
 
   readMessage() async {
-    DocumentReference messages = db.collection("messages").doc();
-
-    print(messages);
+    db.collection("messages").get().then(
+      (querySnapshot) {
+        print("Successfully completed");
+        for (var docSnapshot in querySnapshot.docs) {
+          print(
+              '${docSnapshot.id} => DAta:${docSnapshot.data()} \n message:${docSnapshot.data()['text']}');
+        }
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
   }
 }
