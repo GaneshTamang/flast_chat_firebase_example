@@ -1,6 +1,5 @@
 # flast_chat_firebase_example
-
-This is firebase auth example using firebase
+This is a simple chat app for Authentication and get Data
 
 ## Getting Started
 
