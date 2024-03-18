@@ -1,13 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flast_chat_firebase_example/constants.dart';
+import 'package:flast_chat_firebase_example/custom_widgets/message_text_bubble.dart';
 import 'package:flast_chat_firebase_example/services/firebase_auth3_service.dart';
 import 'package:flast_chat_firebase_example/services/firebase_crud_service.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
   static String pageID = "Chat Page";
-  const ChatScreen({super.key});
+
+  const ChatScreen({
+    super.key,
+  });
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -16,11 +21,19 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   FirebaseFirestore db = FirebaseFirestore.instance;
   TextEditingController typedTextmessage = TextEditingController();
+  FirebaseAuth auth = FirebaseAuth.instance;
+  String currentUser = "";
+  // !  controller for chat to scroll to last
 
   @override
   void initState() {
+    User? loggedINUserAuthenticate = auth.currentUser;
+    currentUser = loggedINUserAuthenticate?.email! ?? "no user logged";
+
+    // ! every time animate
+
     // FireBaseCrudService().getMessage();
-    FireBaseCrudService().getStreamMessage();
+    // FireBaseCrudService().getStreamMessage();
     super.initState();
   }
 
@@ -35,29 +48,11 @@ class _ChatScreenState extends State<ChatScreen> {
         body: Column(
           children: [
             StreamBuilder<QuerySnapshot>(
-                stream: db.collection('messages').snapshots(),
+                stream: db.collection('messages').orderBy('date').snapshots(),
                 builder: (context, snapShot) {
                   if (snapShot.hasData) {
-                    final messages = snapShot.data?.docs;
-                    List<Widget> messageWidget = [];
-                    for (QueryDocumentSnapshot message in messages!) {
-                      String messageText = message['text'];
-                      String sender = message['sender'];
-                      Widget singleMessageWiget = Card(
-                        child: Column(
-                          children: [
-                            Text(messageText),
-                            Text(sender),
-                          ],
-                        ),
-                      );
-                      messageWidget.add(singleMessageWiget);
-                    }
-                    return Expanded(
-                      child: ListView(
-                        children: messageWidget,
-                      ),
-                    );
+                    // !  if has data
+                    return setupMessageBubble(snapShot);
                   } else if (!snapShot.hasData || snapShot.hasError) {
                     return const Text('No Data');
                   } else if (snapShot.connectionState ==
@@ -72,6 +67,31 @@ class _ChatScreenState extends State<ChatScreen> {
             typeMessageTextField(),
           ],
         ),
+      ),
+    );
+  }
+
+  Flexible setupMessageBubble(AsyncSnapshot<QuerySnapshot<Object?>> snapShot) {
+    final messages = snapShot.data?.docs.reversed;
+    // ! ready to save message in wdget
+    List<Widget> messageWidget = [];
+
+    // !for each query  making widget text and saving message in list
+    for (QueryDocumentSnapshot message in messages!) {
+      String messageText = message['text'];
+      String sender = message['sender'];
+
+      Widget singleMessageWiget = MessageTextBubble(
+        sender: sender,
+        messageText: messageText,
+        isMe: currentUser == sender ? true : false,
+      );
+      messageWidget.add(singleMessageWiget);
+    }
+    return Expanded(
+      child: ListView(
+        reverse: true,
+        children: messageWidget,
       ),
     );
   }

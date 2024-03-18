@@ -9,10 +9,15 @@ class FirebaseService {
   final FirebaseAuth authentication = FirebaseAuth.instance;
   bool canNavigate = false;
 
-  checkAndNavigateToPage(bool shallNavigate, BuildContext context) {
+  Future<void> checkAndNavigateToPage(
+      bool shallNavigate, BuildContext context) async {
     if (shallNavigate) {
-      Navigator.pushNamed(context, ChatScreen.pageID);
       canNavigate = false;
+      await Navigator.pushNamed(
+        context,
+        ChatScreen.pageID,
+      );
+
       print('canNavigate:$canNavigate');
     } else {
       return;
@@ -103,7 +108,7 @@ class FirebaseService {
           email: typedEmail, password: typedPassword);
       if (context.mounted) {
         canNavigate = true;
-        checkAndNavigateToPage(canNavigate, context);
+        await checkAndNavigateToPage(canNavigate, context);
       }
     } on FirebaseAuthException catch (error) {
       if (context.mounted) {

@@ -27,31 +27,10 @@ class _LoginScreenState extends State<LoginScreen> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            headingStyle(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                keyboardType: TextInputType.emailAddress,
-                textAlign: TextAlign.center,
-                decoration: textInputDecoration.copyWith(
-                  hintText: 'email_example@example.com',
-                ),
-                controller: typedEmail,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                obscureText: true,
-                keyboardType: TextInputType.visiblePassword,
-                textAlign: TextAlign.center,
-                decoration: textInputDecoration.copyWith(
-                  alignLabelWithHint: true,
-                  hintText: 'Type Password',
-                ),
-                controller: typedPassword,
-              ),
-            ),
+            // ! here flexible will try to be flexible with size  for render when key  board is opened
+            Flexible(child: headingStyle()),
+            emailTextField(),
+            passwordTextField(),
             KCustomMaterialButton(
               buttonName: 'Log In',
               onTapCallBack: () async {
@@ -71,6 +50,36 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Padding passwordTextField() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextField(
+        obscureText: true,
+        keyboardType: TextInputType.visiblePassword,
+        textAlign: TextAlign.center,
+        decoration: textInputDecoration.copyWith(
+          alignLabelWithHint: true,
+          hintText: 'Type Password',
+        ),
+        controller: typedPassword,
+      ),
+    );
+  }
+
+  Padding emailTextField() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextField(
+        keyboardType: TextInputType.emailAddress,
+        textAlign: TextAlign.center,
+        decoration: textInputDecoration.copyWith(
+          hintText: 'email_example@example.com',
+        ),
+        controller: typedEmail,
+      ),
+    );
+  }
+
   Row headingStyle() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -80,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Icon(
             Icons.flash_on,
             color: Colors.orange,
-            size: 70,
+            size: 250,
             shadows: [
               Shadow(
                 color: Colors.black,

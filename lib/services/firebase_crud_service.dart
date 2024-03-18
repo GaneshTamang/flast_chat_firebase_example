@@ -7,6 +7,7 @@ class FireBaseCrudService {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
   String currentLoggedInUser = "";
+
   _checkCurrentUser() {
     User? loggedInUser = auth.currentUser;
     if (loggedInUser != null) {
@@ -31,21 +32,21 @@ class FireBaseCrudService {
     }
   }
 
-// ? this is a type of method only for quering when required where as stream is for check stream if any do again
-  getMessage() async {
-    await db.collection("messages").get().then(
-      (querySnapshot) {
-        print("\u001b[4m\u001b[1m Successfully completed \n Message Section:");
-        for (var docSnapshot in querySnapshot.docs) {
-          // print('${docSnapshot.id} => DAta:${docSnapshot.data()}');
-          print(
-              ' \n sender:${docSnapshot.data()['sender']}\n message:${docSnapshot.data()['text']}');
-        }
-      },
-      onError: (e) => print("Error completing: $e"),
-    );
-  }
-// ! created message for streaming type for keep updating data from DB if any chages
+  // ? this is a type of method only for quering when required where as stream is for check stream if any do again
+//   getMessage() async {
+//     await db.collection("messages").get().then(
+//       (querySnapshot) {
+//         print("\u001b[4m\u001b[1m Successfully completed \n Message Section:");
+//         for (var docSnapshot in querySnapshot.docs) {
+//           // print('${docSnapshot.id} => DAta:${docSnapshot.data()}');
+//           print(
+//               ' \n sender:${docSnapshot.data()['sender']}\n message:${docSnapshot.data()['text']}');
+//         }
+//       },
+//       onError: (e) => print("Error completing: $e"),
+//     );
+//   }
+// // ! created message for streaming type for keep updating data from DB if any chages
 
   getStreamMessage() async {
     // ! get snap for stream for push from server
