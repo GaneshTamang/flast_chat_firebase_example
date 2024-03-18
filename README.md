@@ -4,12 +4,12 @@ This is a simplegroup chat  example with firebase
 
 
 #### app screenshots
-![welcome screen    ](Screenshot_1710501284.png)
-![loginscreen](Screenshot_1710501370.png)
-![popup](Screenshot_1710501422.png)
-![registration screen](Screenshot_1710501515.png)
-![alert on registration](Screenshot_1710501561.png) 
-![group chat screen](Screenshot_1710501568.png)
+<img src ="ReadmeImages/welcomeScreen.png"  height="600px" width="300px">
+<img src ="ReadmeImages/registerScreen.png" height="600px" width="300px">
+<img src ="ReadmeImages/loginScreen.png" height="600px" width="300px">
+<img src ="ReadmeImages/alertsuccessfull.png" height="600px" width="300px">
+<img src ="ReadmeImages/alertdialog.png" height="600px" width="300px">
+<img src ="ReadmeImages/chatScreen.png" height="600px" width="300px">
 
 ## Getting Started
 
