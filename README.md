@@ -7,7 +7,7 @@ This is a simplegroup chat  example with firebase
 <img src ="ReadmeImages/welcomeScreen.png"  height="600px" width="300px">
 <img src ="ReadmeImages/registerScreen.png" height="600px" width="300px">
 <img src ="ReadmeImages/loginScreen.png" height="600px" width="300px">
-<img src ="ReadmeImages/alertsuccessfull.png" height="600px" width="300px">
+<img src ="ReadmeImages/alertSuccessfull.png" height="600px" width="300px">
 <img src ="ReadmeImages/alertdialog.png" height="600px" width="300px">
 <img src ="ReadmeImages/chatScreen.png" height="600px" width="300px">
 
@@ -21,4 +21,3 @@ Edited ffrom another branch example
 
 
 git add .
-git 
