@@ -4,6 +4,7 @@ import 'package:flast_chat_firebase_example/custom_widgets/gradient_text.dart';
 import 'package:flast_chat_firebase_example/screens/login_screen.dart';
 import 'package:flast_chat_firebase_example/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static String pageID = "Welcome_screen";
@@ -68,6 +69,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   onPressed: () {
                     Navigator.of(context).pop(true);
                     Navigator.of(context).pop(true);
+                    SystemNavigator.pop();
                   },
                   child: const Text('yes')),
               ElevatedButton(

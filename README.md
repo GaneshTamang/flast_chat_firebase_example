@@ -25,13 +25,4 @@ chat Screen
 <img src ="ReadmeImages/chatScreen.png" height="600px" width="300px">
 
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-
-
-Edited ffrom another branch example
-
-
-git add .
