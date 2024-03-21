@@ -7,18 +7,18 @@ import 'package:flutter/material.dart';
 
 class FirebaseService {
   final FirebaseAuth authentication = FirebaseAuth.instance;
-  bool canNavigate = false;
+  bool _canNavigate = false;
 
   Future<void> checkAndNavigateToPage(
       bool shallNavigate, BuildContext context) async {
-    if (shallNavigate) {
-      canNavigate = false;
+    if (shallNavigate == true) {
+      _canNavigate = false;
       await Navigator.pushNamed(
         context,
         ChatScreen.pageID,
       );
 
-      print('canNavigate:$canNavigate');
+      print('canNavigate:$_canNavigate');
     } else {
       return;
     }
@@ -107,8 +107,8 @@ class FirebaseService {
       await authentication.signInWithEmailAndPassword(
           email: typedEmail, password: typedPassword);
       if (context.mounted) {
-        canNavigate = true;
-        await checkAndNavigateToPage(canNavigate, context);
+        _canNavigate = true;
+        await checkAndNavigateToPage(_canNavigate, context);
       }
     } on FirebaseAuthException catch (error) {
       if (context.mounted) {
