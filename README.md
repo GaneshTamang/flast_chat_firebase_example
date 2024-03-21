@@ -25,6 +25,13 @@ chat Screen
 <img src ="ReadmeImages/chatScreen.png" height="600px" width="300px">
 
 
-# Details 
- getting started with flutter if intrested u can contact at 
- tamangganesh@hotmail.com
+## Getting Started
+
+This project is a starting point for a Flutter application.
+
+
+
+Edited ffrom another branch example
+
+
+git add .
